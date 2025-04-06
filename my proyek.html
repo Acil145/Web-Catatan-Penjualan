@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 10px;
+        text-align: center;
+    }
+    th {
+        background-color: lightgray;
+    }
+    tr:nth-child(odd) {
+        background-color: lightblue;
+    }
+    .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+    }
+    input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+    }
+    button {
+        margin: 0;
+        position: absolute;
+        left: 50%;
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        padding: 10px;
+    } 
+    #totalRow {
+        font-weight: bold;
+        background-color: yellow;
+        text-align: center;
+    }
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keuangan</title>
+</head>
+<body>
+    <table id="dataTabel", style="width: 100%;">
+        <tr id="HEADER">
+            <th>Nama Barang</th>
+            <th>Harga Dasar</th>
+            <th>Harga Jual</th>
+            <th>Profit</th>
+        </tr>
+        <tr id="totalRow">
+            <td>Total</td>
+            <td id="totalDasar">0</td>
+            <td id="totalJual">0</td>
+            <td id="totalProfit">0</td>
+        </tr>
+    </table>
+
+    <br><br>
+
+    <div class="container">
+        <label>Nama Barang</label>
+        <input type="text" id="iNama" onkeypress="cekEnter(event)">
+        <label>Harga Dasar</label>
+        <input type="number" id="iDasar" onkeypress="cekEnter(event)">
+        <label>Harga Jual</label>
+        <input type="number" id="iJual" onkeypress="cekEnter(event)">
+    </div>
+    <button onclick="tampilkan()">Submit</button>
+
+    <script>
+    let ciNama = document.getElementById("iNama");
+    let ciDasar = document.getElementById("iDasar");
+    let ciJual = document.getElementById("iJual");
+
+    let tDasar = 0;
+    let tJual = 0;
+    let tProfit = 0;
+
+        function tampilkan() {
+            let isi1 = ciNama.value.trim();
+            let isi2 = ciDasar.value.trim();
+            let isi3 = ciJual.value.trim();
+            if (isi1 === "") {return}
+            if (isi2 === "") {return}
+            if (isi3 === "") {return}
+
+            let table = document.getElementById("dataTabel");
+            let newRow = table.insertRow(table.rows.length - 1);
+            newRow.insertCell(0).innerText = ciNama.value;
+            newRow.insertCell(1).innerText = ciDasar.value;
+            newRow.insertCell(2).innerText = ciJual.value;
+            newRow.insertCell(3).innerText = ciJual.value - ciDasar.value;
+            
+            tDasar = tDasar + Number(ciDasar.value);
+            tJual = tJual + Number(ciJual.value);
+            tProfit = tProfit + Number(ciJual.value - ciDasar.value);
+            document.getElementById("totalDasar").innerText = tDasar;
+            document.getElementById("totalJual").innerText = tJual;
+            document.getElementById("totalProfit").innerText = tProfit;
+            
+            ciNama.value = "";
+            ciDasar.value = "";
+            ciJual.value = "";
+        }
+
+        function cekEnter(event) {
+            if (event.key === "Enter") {
+                tampilkan();
+            }
+        }
+    </script>
+</body>
+</html>
